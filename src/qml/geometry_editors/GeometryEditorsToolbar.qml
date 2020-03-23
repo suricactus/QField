@@ -51,6 +51,14 @@ VisibilityFadingRow {
     featureModel.vertexModel.clear()
   }
 
+  // returns true if handled
+  function clicked(point) {
+    if ( toolbarRow.item )
+      return toolbarRow.item.clicked(point)
+    else
+      return false
+  }
+
   VisibilityFadingRow {
     id: selectorRow
     stateVisible: false
