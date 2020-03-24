@@ -54,6 +54,11 @@ class VertexModel : public QStandardItemModel
     Q_PROPERTY( bool canNextVertex READ canNextVertex NOTIFY canNextVertexChanged )
 
     /**
+     * The index of the currently active vertex. If no vertex is selected, this is -1.
+     */
+    Q_PROPERTY( int currentVertexIndex READ currentVertexIndex WRITE setCurrentVertexIndex NOTIFY currentVertexIndexChanged )
+
+    /**
      * The geometry in layer coordinates
      */
     Q_PROPERTY( QgsGeometry geometry READ geometry WRITE setGeometry NOTIFY geometryChanged )
@@ -159,6 +164,10 @@ class VertexModel : public QStandardItemModel
 
     QHash<int, QByteArray> roleNames() const override;
 
+    int currentVertexIndex() const;
+
+    void setCurrentVertexIndex( int currentIndex );
+
   signals:
     //! \copydoc editingMode
     void editingModeChanged();
@@ -178,6 +187,8 @@ class VertexModel : public QStandardItemModel
     void canPreviousVertexChanged();
     //! \copydoc canNextVertex
     void canNextVertexChanged();
+
+    void currentVertexIndexChanged();
 
     /**
      * The coordinate reference system in which the geometry is
