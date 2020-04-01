@@ -305,6 +305,9 @@ Page {
           target: attributeEditorLoader.item
           onValueChanged: {
             AttributeValue = isNull ? undefined : value
+            if ( qfieldSettings.autoSave ) {
+                buffer()
+            }
           }
         }
       }
@@ -429,7 +432,7 @@ Page {
 
         Layout.alignment: Qt.AlignTop | Qt.AlignLeft
 
-        visible: ( form.state === 'Add' || form.state === 'Edit' )
+        visible: ( form.state === 'Add' || form.state === 'Edit' ) && !qfieldSettings.autoSave
         width: 48*dp
         height: 48*dp
         clip: true
@@ -488,6 +491,7 @@ Page {
         height: 48*dp
         clip: true
         bgcolor: form.state === 'Add' ? "#900000" : Theme.darkGray
+        visible: !qfieldSettings.autoSave
 
         iconSource: form.state === 'Add' ? Theme.getThemeIcon( 'ic_delete_forever_white_24dp' ) : Theme.getThemeIcon( 'ic_close_white_24dp' )
 

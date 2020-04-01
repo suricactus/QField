@@ -18,6 +18,7 @@ Page {
   property alias incrementalRendering: incrementalRenderingCheckBox.checked
   property alias numericalDigitizingInformation: numericalDigitizingInformationCheckBox.checked
   property alias nativeCamera: nativeCameraCheckBox.checked
+  property alias autoSave: autoSaveCheckBox.checked
 
   Settings {
     property alias showScaleBar: showScaleBarCheckBox.checked
@@ -26,6 +27,7 @@ Page {
     property alias incrementalRendering: incrementalRenderingCheckBox.checked
     property alias numericalDigitizingInformation: numericalDigitizingInformationCheckBox.checked
     property alias nativeCamera: nativeCameraCheckBox.checked
+    property alias autosave: autoSaveCheckBox.checked
   }
 
   Rectangle {
@@ -269,6 +271,45 @@ Page {
 
             QfSwitch {
                 id: nativeCameraCheckBox
+                checked: true
+                Layout.alignment: Qt.AlignTop
+            }
+
+            ColumnLayout {
+
+                Label {
+                    padding: 8 * dp
+                    leftPadding: 22 * dp
+                    text: qsTr( "Fast (auto save) mode" )
+                    font: Theme.defaultFont
+
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    Layout.minimumHeight: contentHeight
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: autoSaveCheckBox.toggle()
+                    }
+                }
+
+                Label {
+                    padding: 8 * dp
+                    topPadding: 0
+                    leftPadding: 22 * dp
+                    text: qsTr( "If enabled, the feature is stored after having a valid geometry and the constraints are fulfilled and atributes are commited immediately" )
+                    font: Theme.tipFont
+
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    Layout.minimumHeight: contentHeight
+                }
+
+            }
+
+            QfSwitch {
+                id: autoSaveCheckBox
                 checked: true
                 Layout.alignment: Qt.AlignTop
             }
