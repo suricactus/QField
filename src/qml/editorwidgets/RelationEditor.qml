@@ -88,7 +88,7 @@ Rectangle{
                 }
 
                 onClicked: {
-                  if( buffer() ) {
+                  if( save() ) {
                       //this has to be checked after buffering because the primary could be a value that has been created on creating featurer (e.g. fid)
                       if( relationEditorModel.parentPrimariesAvailable ) {
                           /*
@@ -312,7 +312,7 @@ Rectangle{
 
             state: embeddedFeatureForm.state
 
-            onSaved: {
+            onConfirmed: {
                 popup.close()
             }
 

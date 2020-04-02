@@ -175,7 +175,7 @@ Item {
         state: "Add"
         embedded: true
 
-        onSaved: {
+        onConfirmed: {
           var referencedValue = attributeFormModel.attribute(relationCombobox._relation.resolveReferencedField(field.name))
           comboBox.currentValue = referencedValue
           popup.close()
