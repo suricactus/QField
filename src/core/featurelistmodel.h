@@ -65,6 +65,8 @@ class FeatureListModel : public QAbstractItemModel
     virtual int columnCount( const QModelIndex &parent ) const override;
     virtual QVariant data( const QModelIndex &index, int role ) const override;
 
+    Q_INVOKABLE QVariant dataFromRowIndex( int row, int role ){ return data( index( row, 0, QModelIndex() ), role ); }
+
     virtual QHash<int, QByteArray> roleNames() const override;
 
     QgsVectorLayer *currentLayer() const;
@@ -140,7 +142,7 @@ class FeatureListModel : public QAbstractItemModel
      */
     void reloadLayer();
 
-    QgsVectorLayer *mCurrentLayer;
+    QgsVectorLayer *mCurrentLayer = nullptr;
 
     QList<Entry> mEntries;
     QString mKeyField;
