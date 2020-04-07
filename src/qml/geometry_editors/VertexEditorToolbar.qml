@@ -27,11 +27,18 @@ VisibilityFadingRow {
     featureModel.vertexModel.reset()
   }
 
+  function applyChanges( apply ) {
+    if ( apply && featureModel.vertexModel.dirty ){
+      featureModel.applyVertexModelToGeometry()
+      featureModel.save()
+    }
+  }
+
   Button {
     id: cancelButton
     iconSource: Theme.getThemeIcon( "ic_clear_white_24dp" )
     round: true
-    visible: featureModel.vertexModel.dirty
+    visible: featureModel.vertexModel.dirty && !qfieldSettings.autoSave
     bgcolor: "#900000"
     onClicked: {
       cancel()
@@ -43,12 +50,10 @@ VisibilityFadingRow {
     iconSource: Theme.getThemeIcon( "ic_check_white_48dp" )
     round: true
     bgcolor: featureModel.vertexModel.dirty ? Theme.mainColor : "#616161"
+    visible: !qfieldSettings.autoSave
 
     onClicked: {
-      if (featureModel.vertexModel.dirty){
-        featureModel.applyVertexModelToGeometry()
-        featureModel.save()
-      }
+      applyChanges( true )
       finished()
     }
   }
@@ -62,6 +67,7 @@ VisibilityFadingRow {
     bgcolor: featureModel.vertexModel.canPreviousVertex ? "#FFD600" : "#616161"
 
     onClicked: {
+      applyChanges( qfieldSettings.autoSave )
       featureModel.vertexModel.previous()
     }
   }
@@ -77,6 +83,8 @@ VisibilityFadingRow {
       if (featureModel.vertexModel.canRemoveVertex){
         featureModel.vertexModel.removeCurrentVertex()
       }
+      //on remove we have to apply directly after the action
+      applyChanges( qfieldSettings.autoSave )
     }
   }
 
@@ -89,6 +97,7 @@ VisibilityFadingRow {
     bgcolor: "#FFD600"
 
     onClicked: {
+      applyChanges( qfieldSettings.autoSave )
       if (featureModel.vertexModel.editingMode === VertexModel.AddVertex)
         featureModel.vertexModel.editingMode = VertexModel.EditVertex
       else
@@ -105,6 +114,7 @@ VisibilityFadingRow {
     bgcolor: featureModel.vertexModel && featureModel.vertexModel.canNextVertex ? "#FFD600" : "#616161"
 
     onClicked: {
+      applyChanges( qfieldSettings.autoSave )
       featureModel.vertexModel.next()
     }
   }
